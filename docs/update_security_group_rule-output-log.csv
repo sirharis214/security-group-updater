@@ -1,0 +1,164 @@
+message
+"INIT_START Runtime Version: python:3.9.v36	Runtime Version ARN: arn:aws:lambda:us-east-1::runtime:386a1053a16b9122f1622b361a8a78f39595e5a53df0c82932eacae85b33cd62
+"
+"START RequestId: 93fe98c7-0b23-40bb-a0e2-195d3da90954 Version: $LATEST
+"
+"[INFO]	2023-11-15T19:26:59.937Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	Found credentials in environment variables.
+"
+"[INFO]	2023-11-15T19:27:02.336Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	us-east-1 has 2 SG's that matched condition tag_key : test_whitelist
+"
+"[INFO]	2023-11-15T19:27:02.356Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	SG #1: sg-0931bff5d7a180d5a should have rules that match 10.0.0.2/32 with ['443']
+"
+"[INFO]	2023-11-15T19:27:02.356Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	SG #1: sg-0931bff5d7a180d5a has 2 rules
+"
+"[INFO]	2023-11-15T19:27:02.356Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	checking for port 443
+"
+"[INFO]	2023-11-15T19:27:02.356Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	checking_rule #1: rule not for our desired_cidr
+"
+"[INFO]	2023-11-15T19:27:02.356Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	checking for port 443
+"
+"[INFO]	2023-11-15T19:27:02.356Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	checking_rule #2: {
+    ""FromPort"": 443,
+    ""IpProtocol"": ""tcp"",
+    ""IpRanges"": [
+        {
+            ""CidrIp"": ""10.0.0.2/32"",
+            ""Description"": ""test rule description""
+        }
+    ],
+    ""Ipv6Ranges"": [],
+    ""PrefixListIds"": [],
+    ""ToPort"": 443,
+    ""UserIdGroupPairs"": []
+}
+"
+"[INFO]	2023-11-15T19:27:02.357Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	rule's cidr matches desired_cidr
+"
+"[INFO]	2023-11-15T19:27:02.357Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	rule has required ports; from:443 - to:443
+"
+"[INFO]	2023-11-15T19:27:02.357Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	checking if port range was marked to be created...
+"
+"[INFO]	2023-11-15T19:27:02.357Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	SG #2: sg-0eec40bafd5628a81 should have rules that match 10.0.0.2/32 with ['443']
+"
+"[INFO]	2023-11-15T19:27:02.357Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	SG #2: sg-0eec40bafd5628a81 has 0 rules
+"
+"[INFO]	2023-11-15T19:27:02.357Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	Need to create rules for SG #2 sg-0eec40bafd5628a81: [
+    {
+        ""sg_id"": ""sg-0eec40bafd5628a81"",
+        ""region"": ""us-east-1"",
+        ""desired_cidr"": ""10.0.0.2/32"",
+        ""from_port"": ""443"",
+        ""to_port"": ""443""
+    }
+]
+"
+"[INFO]	2023-11-15T19:27:02.357Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	Creating rule: {'sg_id': 'sg-0eec40bafd5628a81', 'region': 'us-east-1', 'desired_cidr': '10.0.0.2/32', 'from_port': '443', 'to_port': '443'}
+"
+"[INFO]	2023-11-15T19:27:04.024Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	us-west-1 has 1 SG's that matched condition tag_key : test_whitelist
+"
+"[INFO]	2023-11-15T19:27:04.025Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	SG #1: sg-002fc945e5ffc935f should have rules that match 10.0.0.2/32 with ['443', ['22', '23']]
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	SG #1: sg-002fc945e5ffc935f has 2 rules
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	checking for port 443
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	checking_rule #1: {
+    ""FromPort"": 22,
+    ""IpProtocol"": ""tcp"",
+    ""IpRanges"": [
+        {
+            ""CidrIp"": ""10.0.0.2/32"",
+            ""Description"": ""test rule description 2""
+        }
+    ],
+    ""Ipv6Ranges"": [],
+    ""PrefixListIds"": [],
+    ""ToPort"": 23,
+    ""UserIdGroupPairs"": []
+}
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	rule's cidr matches desired_cidr
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	rule does not have required ports; from:443 - to:443
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	marking rule to be created for port 443
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	checking for port 443
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	checking_rule #2: rule not for our desired_cidr
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	checking for port ['22', '23']
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	checking_rule #1: {
+    ""FromPort"": 22,
+    ""IpProtocol"": ""tcp"",
+    ""IpRanges"": [
+        {
+            ""CidrIp"": ""10.0.0.2/32"",
+            ""Description"": ""test rule description 2""
+        }
+    ],
+    ""Ipv6Ranges"": [],
+    ""PrefixListIds"": [],
+    ""ToPort"": 23,
+    ""UserIdGroupPairs"": []
+}
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	rule's cidr matches desired_cidr
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	rule has required ports; from:22 - to:23
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	checking if port range was marked to be created...
+"
+"[INFO]	2023-11-15T19:27:04.026Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	['22', '23'] was not marked to be created...
+"
+"[INFO]	2023-11-15T19:27:04.027Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	Need to create rules for SG #1 sg-002fc945e5ffc935f: [
+    {
+        ""sg_id"": ""sg-002fc945e5ffc935f"",
+        ""region"": ""us-west-1"",
+        ""desired_cidr"": ""10.0.0.2/32"",
+        ""from_port"": ""443"",
+        ""to_port"": ""443""
+    }
+]
+"
+"[INFO]	2023-11-15T19:27:04.055Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	Creating rule: {'sg_id': 'sg-002fc945e5ffc935f', 'region': 'us-west-1', 'desired_cidr': '10.0.0.2/32', 'from_port': '443', 'to_port': '443'}
+"
+"[INFO]	2023-11-15T19:27:05.374Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	us-west-2 has No SG's that matched condition tag_key : test_whitelist
+"
+"[INFO]	2023-11-15T19:27:05.376Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	No SG in us-west-2 to update, none matched condition tag_key : test_whitelist
+"
+"[INFO]	2023-11-15T19:27:05.775Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	us-east-2 has No SG's that matched condition tag_key : test_whitelist
+"
+"[INFO]	2023-11-15T19:27:05.777Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	No SG in us-east-2 to update, none matched condition tag_key : test_whitelist
+"
+"[INFO]	2023-11-15T19:27:05.777Z	93fe98c7-0b23-40bb-a0e2-195d3da90954	{
+    ""us-east-1"": [
+        {
+            ""message"": ""SG sg-0931bff5d7a180d5a already had rules for this cidr:port-range combo""
+        },
+        {
+            ""sg_id"": ""sg-0eec40bafd5628a81"",
+            ""region"": ""us-east-1"",
+            ""desired_cidr"": ""10.0.0.2/32"",
+            ""from_port"": ""443"",
+            ""to_port"": ""443""
+        }
+    ],
+    ""us-west-1"": [
+        {
+            ""sg_id"": ""sg-002fc945e5ffc935f"",
+            ""region"": ""us-west-1"",
+            ""desired_cidr"": ""10.0.0.2/32"",
+            ""from_port"": ""443"",
+            ""to_port"": ""443""
+        }
+    ],
+    ""us-west-2"": [],
+    ""us-east-2"": []
+}
+"
+"END RequestId: 93fe98c7-0b23-40bb-a0e2-195d3da90954
+"
+"REPORT RequestId: 93fe98c7-0b23-40bb-a0e2-195d3da90954	Duration: 6042.03 ms	Billed Duration: 6043 ms	Memory Size: 128 MB	Max Memory Used: 84 MB	Init Duration: 265.09 ms	
+"

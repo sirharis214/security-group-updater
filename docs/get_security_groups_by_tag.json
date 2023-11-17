@@ -1,0 +1,161 @@
+{
+    "us-east-1": [
+        {
+            "Description": "test SG description",
+            "GroupName": "test-east-1",
+            "IpPermissions": [
+                {
+                    "FromPort": 0,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "73.248.103.165/32",
+                            "Description": "test rule description"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": [],
+                    "ToPort": 0,
+                    "UserIdGroupPairs": []
+                },
+                {
+                    "FromPort": 443,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "10.0.0.2/32",
+                            "Description": "test rule description"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": [],
+                    "ToPort": 443,
+                    "UserIdGroupPairs": []
+                }
+            ],
+            "OwnerId": "594924424566",
+            "GroupId": "sg-0931bff5d7a180d5a",
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": [],
+                    "UserIdGroupPairs": []
+                }
+            ],
+            "Tags": [
+                {
+                    "Key": "test_whitelist",
+                    "Value": "[443]"
+                }
+            ],
+            "VpcId": "vpc-0506ab70cca7b4324"
+        },
+        {
+            "Description": "443 needed",
+            "GroupName": "test-2-east",
+            "IpPermissions": [],
+            "OwnerId": "594924424566",
+            "GroupId": "sg-0eec40bafd5628a81",
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": [],
+                    "UserIdGroupPairs": []
+                }
+            ],
+            "Tags": [
+                {
+                    "Key": "test_whitelist",
+                    "Value": "443"
+                }
+            ],
+            "VpcId": "vpc-0506ab70cca7b4324"
+        }
+    ],
+    "us-west-1": [
+        {
+            "Description": "test SG description",
+            "GroupName": "test-west-1",
+            "IpPermissions": [
+                {
+                    "FromPort": 22,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "10.0.0.2/32",
+                            "Description": "test rule description 2"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": [],
+                    "ToPort": 23,
+                    "UserIdGroupPairs": []
+                },
+                {
+                    "FromPort": 0,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "73.248.103.165/32",
+                            "Description": "test rule description"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": [],
+                    "ToPort": 0,
+                    "UserIdGroupPairs": []
+                },
+                {
+                    "FromPort": 443,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "10.0.0.2/32",
+                            "Description": "test_whitelist created by haris/sg-updater"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": [],
+                    "ToPort": 443,
+                    "UserIdGroupPairs": []
+                }
+            ],
+            "OwnerId": "594924424566",
+            "GroupId": "sg-002fc945e5ffc935f",
+            "IpPermissionsEgress": [
+                {
+                    "IpProtocol": "-1",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "0.0.0.0/0"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": [],
+                    "UserIdGroupPairs": []
+                }
+            ],
+            "Tags": [
+                {
+                    "Key": "test_whitelist",
+                    "Value": "[443,22-23]"
+                }
+            ],
+            "VpcId": "vpc-068f8707cdf1cfbc4"
+        }
+    ],
+    "us-west-2": [],
+    "us-east-2": []
+}
