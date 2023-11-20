@@ -59,7 +59,22 @@
         {
             "Description": "443 needed",
             "GroupName": "test-2-east",
-            "IpPermissions": [],
+            "IpPermissions": [
+                {
+                    "FromPort": 443,
+                    "IpProtocol": "tcp",
+                    "IpRanges": [
+                        {
+                            "CidrIp": "10.0.0.2/32",
+                            "Description": "test_whitelist created by haris/sg-updater"
+                        }
+                    ],
+                    "Ipv6Ranges": [],
+                    "PrefixListIds": [],
+                    "ToPort": 443,
+                    "UserIdGroupPairs": []
+                }
+            ],
             "OwnerId": "594924424566",
             "GroupId": "sg-0eec40bafd5628a81",
             "IpPermissionsEgress": [

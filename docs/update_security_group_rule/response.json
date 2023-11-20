@@ -1,0 +1,103 @@
+{
+    "us-east-1": [
+        {
+            "message": "SG sg-0931bff5d7a180d5a already had rules for this cidr:port-range combo"
+        },
+        {
+            "rule": {
+                "sg_id": "sg-0eec40bafd5628a81",
+                "region": "us-east-1",
+                "cidr_block": "10.0.0.2/32",
+                "from_port": "443",
+                "to_port": "443"
+            },
+            "status": "success",
+            "response": {
+                "Return": true,
+                "SecurityGroupRules": [
+                    {
+                        "SecurityGroupRuleId": "sgr-056c68f4eb30b068d",
+                        "GroupId": "sg-0eec40bafd5628a81",
+                        "GroupOwnerId": "594924424566",
+                        "IsEgress": false,
+                        "IpProtocol": "tcp",
+                        "FromPort": 443,
+                        "ToPort": 443,
+                        "CidrIpv4": "10.0.0.2/32",
+                        "Description": "test_whitelist created by haris/sg-updater",
+                        "Tags": [
+                            {
+                                "Key": "Created_By",
+                                "Value": "haris/sg_updater"
+                            }
+                        ]
+                    }
+                ],
+                "ResponseMetadata": {
+                    "RequestId": "06ea101f-01d7-4cd7-88bc-984f45b80b69",
+                    "HTTPStatusCode": 200,
+                    "HTTPHeaders": {
+                        "x-amzn-requestid": "06ea101f-01d7-4cd7-88bc-984f45b80b69",
+                        "cache-control": "no-cache, no-store",
+                        "strict-transport-security": "max-age=31536000; includeSubDomains",
+                        "content-type": "text/xml;charset=UTF-8",
+                        "content-length": "989",
+                        "date": "Mon, 20 Nov 2023 19:50:45 GMT",
+                        "server": "AmazonEC2"
+                    },
+                    "RetryAttempts": 0
+                }
+            }
+        }
+    ],
+    "us-west-1": [
+        {
+            "rule": {
+                "sg_id": "sg-002fc945e5ffc935f",
+                "region": "us-west-1",
+                "cidr_block": "10.0.0.2/32",
+                "from_port": "443",
+                "to_port": "443"
+            },
+            "status": "success",
+            "response": {
+                "Return": true,
+                "SecurityGroupRules": [
+                    {
+                        "SecurityGroupRuleId": "sgr-08f73fd74756de016",
+                        "GroupId": "sg-002fc945e5ffc935f",
+                        "GroupOwnerId": "594924424566",
+                        "IsEgress": false,
+                        "IpProtocol": "tcp",
+                        "FromPort": 443,
+                        "ToPort": 443,
+                        "CidrIpv4": "10.0.0.2/32",
+                        "Description": "test_whitelist created by haris/sg-updater",
+                        "Tags": [
+                            {
+                                "Key": "Created_By",
+                                "Value": "haris/sg_updater"
+                            }
+                        ]
+                    }
+                ],
+                "ResponseMetadata": {
+                    "RequestId": "3fad4a26-6913-43a0-8a86-e0aa5fe97e15",
+                    "HTTPStatusCode": 200,
+                    "HTTPHeaders": {
+                        "x-amzn-requestid": "3fad4a26-6913-43a0-8a86-e0aa5fe97e15",
+                        "cache-control": "no-cache, no-store",
+                        "strict-transport-security": "max-age=31536000; includeSubDomains",
+                        "content-type": "text/xml;charset=UTF-8",
+                        "content-length": "989",
+                        "date": "Mon, 20 Nov 2023 19:50:47 GMT",
+                        "server": "AmazonEC2"
+                    },
+                    "RetryAttempts": 0
+                }
+            }
+        }
+    ],
+    "us-west-2": [],
+    "us-east-2": []
+}

@@ -6,81 +6,6 @@ import logging
 log = logging.getLogger()
 log.setLevel(logging.INFO)
 
-
-"""
-Test search_by = cidr_block
-event = {
-    "type"       : "get_security_groups_by_cidr",
-    "cidr_block" : "10.0.0.2/32"
-}
-
-* 1 SG in east-1
-* 1 SG in west-1
-* No SG's in east-2, west-2 should match
-- Check docs/get_security_groups_by_cidr.json for sample output of lambda_handler for this event
---------------
-Test search_by = tag_key
-event = {
-    "type"    : "get_security_groups_by_tag",
-    "tag_key" : "test_whitelist"
-}
-
-* 2 SG's in east-1
-* 1 SG in west-1
-* No SG's in east-2, west-2 should match
-- Check docs/get_security_groups_by_tag.json for sample output of lambda_handler for this event
---------------
-Test validate_cidr_exists
-event = {
-    "type"       : "validate_cidr_exists",
-    "sg_id"      : "sg-0eec40bafd5628a81",
-    "region"     : "us-east-1",
-    "cidr_block" : "10.0.0.2/32"
-}
---------------
-Test update_security_group_rule
-event = {
-    "type"         : "update_security_group_rule",
-    "tag_key"      : "test_whitelist",
-    "cidr_block"   : "10.0.0.2/32"
-}
-
-** us-east-1 **
-we have 2 SG's that have a tag where key = tag_key
-
-SG 1's tag key tag_key has a value of "[443]"
-SG 1 has 2 rules:
-    Rule 1: is not for the requested cidr
-    Rule 2: is for the requested cidr and already has from:to port 443
-    - Since the rule for cidr_block and port range already exists, there should be any changes to this SG
-SG 2's tag key tag_key has a value of "443" (not in list)
-SG 2 has 0 rules:
-    - Since this SG has no rules, we should expect a rule created for this SG
-    - source = cidr_block & from:to port's = 443
-
-** us-west-1 **
-we have 1 SG that have a tag where key = tag_key
-
-SG 1's tag key tag_key has a value of "[443,22-23]"
-SG 1 has 2 rules:
-    Rule 1: is not for the requested cidr
-    Rule 2: is for requested cidr and from:to port range is 22:23
-    - Since this SG needs two rules for cidr_block: one for port 443-443 and one for 22-23 
-        AND out of two rules, only one matches the cidr_block-port range combo,
-        We should expect one rule to be created for this SG
-    - source desicred_cidr $ from:to 443
-
-** us-east-2 **
-NO SG's have a tag where key = tag_key
-
-** us-west-2 **
-NO SG's have a tag where key = tag_key
-
-- Check docs/update_security_group_rule.json for sample output of lambda_handler for this event
-- Check docs/update_security_group_rule-output-log.csv for sample logs files for this event's lambda run
-"""
-
-
 def create_rules(rules):
     # helper function for update_security_group_rule
     # given a list of rules that need to be created per SG - per region
@@ -160,7 +85,9 @@ def get_rules_to_create(sg_id, region, cidr_block, new_ports, current_sg_rules):
 
     if not current_sg_rules:
         # current SG doesn't have any rules, nothing to validate just generate new rules
-        rules = [generate_rule_for_sg(sg_id, region, cidr_block, port) for port in new_ports]
+        rules = [
+            generate_rule_for_sg(sg_id, region, cidr_block, port) for port in new_ports
+        ]
     else:
         # current SG has existing rules, we must check each one to see if the rule we want to create already exists
         for port in new_ports:
@@ -168,15 +95,21 @@ def get_rules_to_create(sg_id, region, cidr_block, new_ports, current_sg_rules):
                 log.info(f"checking for port {port}")
                 if rule.get("IpRanges")[0].get("CidrIp") == cidr_block:
                     log.info(f"checking_rule #{index}: {json.dumps(rule, indent=4)}")
-                    if isinstance(port, list) and (
-                        str(rule.get("FromPort")) == port[0]
-                        and str(rule.get("ToPort")) == port[1]
-                    ) or (
-                        str(rule.get("FromPort")) == str(rule.get("ToPort")) == port
+                    if (
+                        isinstance(port, list)
+                        and (
+                            str(rule.get("FromPort")) == port[0]
+                            and str(rule.get("ToPort")) == port[1]
+                        )
+                        or (
+                            str(rule.get("FromPort")) == str(rule.get("ToPort")) == port
+                        )
                     ):
                         # cidr_block with configured from:to ports already exists
                         log.info(f"rule has required ports; {port}")
-                        log.info("removing port range if it was marked to be created...")
+                        log.info(
+                            "removing port range if it was marked to be created..."
+                        )
                         temp_ports = ports.copy()
                         for p in temp_ports:
                             if port in ports:
@@ -188,7 +121,9 @@ def get_rules_to_create(sg_id, region, cidr_block, new_ports, current_sg_rules):
                 else:
                     log.info(f"checking_rule #{index}: rule not for our cidr_block")
         if ports:
-            rules = [generate_rule_for_sg(sg_id, region, cidr_block, port) for port in ports]
+            rules = [
+                generate_rule_for_sg(sg_id, region, cidr_block, port) for port in ports
+            ]
 
     return rules
 
@@ -199,7 +134,7 @@ def get_list_of_ports(ports):
     # creates list of port ranges, port range where from:to are two diff port # are added to a sub-list
     # ports = "[443, 22-23]" -> ['443'] or ['443', '22-23']
     ports_ = [x.strip() for x in ports.strip("[] ").split(",")]
-    
+
     new_ports = []
     for port in ports_:
         if "-" in str(port):
@@ -230,30 +165,51 @@ def update_security_group_rule(cidr_block, tag_key, regions):
         matched_sgs = get_security_groups(search_by, tag_key, region)
 
         if not matched_sgs:
-            log.info(f"No SG in {region} to update, none matched condition {search_by} : {tag_key}")
+            log.info(
+                f"No SG in {region} to update, none matched condition {search_by} : {tag_key}"
+            )
             all_security_groups[region] = []
         else:
             for index, sg in enumerate(matched_sgs, start=1):
                 # 2. get the value of tag_key for this SG, which is a list of port ranges for the cidr
                 tags_list = sg.get("Tags", [])
-                ports = next((tag.get("Value") for tag in tags_list if tag.get("Key") == tag_key), [])
+                ports = next(
+                    (
+                        tag.get("Value")
+                        for tag in tags_list
+                        if tag.get("Key") == tag_key
+                    ),
+                    [],
+                )
                 # reformat value to convert any two-number port ranges to sub-list; "[443, 22-23]" -> ['443', ['22', '23']]
                 new_ports = get_list_of_ports(ports)
                 # 3. check if a rule of cidr_block:port combo already exists in this SG
                 current_sg_rules = sg.get("IpPermissions", [])
-                log.info(f"SG #{index}: {sg.get('GroupId')} should have rules that match {cidr_block} with {new_ports}")
-                log.info(f"SG #{index}: {sg.get('GroupId')} has {len(current_sg_rules)} rules")
+                log.info(
+                    f"SG #{index}: {sg.get('GroupId')} should have rules that match {cidr_block} with {new_ports}"
+                )
+                log.info(
+                    f"SG #{index}: {sg.get('GroupId')} has {len(current_sg_rules)} rules"
+                )
                 # returns list of rules that need to be created
-                required_rules = get_rules_to_create(sg.get("GroupId"), region, cidr_block, new_ports, current_sg_rules)
+                required_rules = get_rules_to_create(
+                    sg.get("GroupId"), region, cidr_block, new_ports, current_sg_rules
+                )
 
                 # 4. finally, create rules
                 if required_rules:
                     pretty_required_rules = json.dumps(required_rules, indent=4)
-                    log.info(f"Need to create rules for SG #{index} {sg.get('GroupId')}: {pretty_required_rules}")
+                    log.info(
+                        f"Need to create rules for SG #{index} {sg.get('GroupId')}: {pretty_required_rules}"
+                    )
                     rules = create_rules(required_rules)
                     all_security_groups.setdefault(region, []).extend(rules)
                 else:
-                    this_sg_message = [{"message": f"SG {sg.get('GroupId')} already had rules for this cidr:port-range combo"}]
+                    this_sg_message = [
+                        {
+                            "message": f"SG {sg.get('GroupId')} already had rules for this cidr:port-range combo"
+                        }
+                    ]
                     all_security_groups.setdefault(region, []).extend(this_sg_message)
 
     return all_security_groups
@@ -272,14 +228,12 @@ def is_valid_cidr(ip_cidr):
 
 def validate_cidr_exists(search_by, search_for, region, cidr_block):
     # check if given cidr exists in given sg
-    # @param: search_by    - the filter name 
+    # @param: search_by    - the filter name
     # @param: search_for   - SG id to check
     # @param: region       - the region of the sg
     # @param: cidr_block   - the cidr to look for in sg's ingress rules
-    # @return response     - wether the cidr exists in any of the ingress rule/s for 
-    # given sg, if True, also return the from:to ports for matched rule
-    if not is_valid_cidr(cidr_block):
-        return {"error": "cidr_block must be a valid CIDR block, e.g., '10.0.2.0/32'"}
+    # @return response     - {} wether the cidr exists in any of the ingress rule/s for
+    # for the given sg, if True, return the from:to ports for matched rule
 
     sg = get_security_groups(search_by, search_for, region)
     if not sg:
@@ -287,10 +241,23 @@ def validate_cidr_exists(search_by, search_for, region, cidr_block):
     else:
         rules = sg[0].get("IpPermissions")
         if not rules:
-            log.info(f"SG {search_for} in region {region} doesn't have any ingress rules")
+            log.info(
+                f"SG {search_for} in region {region} doesn't have any ingress rules"
+            )
         else:
-            response = next(({"exists": True, "from_port": rule["FromPort"], "to_port": rule["ToPort"]} for rule in rules if rule.get("IpRanges")[0].get("CidrIp") == cidr_block), {"exists": False})
-            log.info(f"{cidr_block} exists as an ingress rule for {search_for}")
+            response = next(
+                (
+                    {
+                        "exists": True,
+                        "from_port": rule["FromPort"],
+                        "to_port": rule["ToPort"],
+                    }
+                    for rule in rules
+                    if rule.get("IpRanges")[0].get("CidrIp") == cidr_block
+                ),
+                {"exists": False},
+            )
+            log.info(f"SG {search_for} does have an ingress rule for {cidr_block}")
             return response
 
     return {"exists": False}
@@ -305,31 +272,26 @@ def get_security_groups(search_by, search_for, region):
     # Create a Boto3 EC2 client for this region
     ec2_client = boto3.client("ec2", region_name=region)
 
-    # init a empty list for this region
-    # all_security_groups = []
-    # error return
-    error = {}
+    supported_search_by = ["tag_key", "cidr_block", "sg_id"]
+
     # Set filter_name based on search_by value.
     if search_by == "tag_key":
         filter_name = "tag-key"
     elif search_by == "cidr_block":
-        if is_valid_cidr(search_for):
-            filter_name = "ip-permission.cidr"
-        else:
-            error_message = f"invalid value {search_for}, must be a valid CIDR block, e.g., '10.0.2.0/32'."
-            error = {"region": region, "search_by": search_by, "search_for": search_for, "message": error_message}
-            return error
+        filter_name = "ip-permission.cidr"
     elif search_by == "sg_id":
-        if search_for.startswith("sg-"):
-            filter_name = "group-id"
-        else:
-            error_message = f"invalid value {search_for}, must be a valid security group ID, e.g., 'sg-0000'."
-            error = {"region": region, "search_by": search_by, "search_for": search_for, "message": error_message}
-            return error
-    elif search_by not in ["tag_key", "cidr_block", "sg_id"]:
-        error_message = f"invalid value search_for: {search_for}, must be one of the following - ['tag_key', 'cidr_block', 'sg_id']."
-        error = {"region": region, "search_by": search_by, "search_for": search_for, "message": error_message}
-        return error
+        filter_name = "group-id"
+    elif search_by not in supported_search_by:
+        error_message = f"invalid value search_by: {search_by}, must be one of the following: {str(supported_search_by)}"
+        return [
+            {
+                "region": region,
+                "search_by": search_by,
+                "search_for": search_for,
+                "message": error_message,
+                "status": "error",
+            }
+        ]
 
     response = ec2_client.describe_security_groups(
         Filters=[
@@ -343,52 +305,117 @@ def get_security_groups(search_by, search_for, region):
     all_security_groups = response.get("SecurityGroups", [])
 
     if not all_security_groups:
-        log.info(f"{region} has No SG's that matched condition {search_by} : {search_for}")
+        log.info(
+            f"{region} has No SG's that matched condition {search_by} : {search_for}"
+        )
     else:
-        log.info(f"{region} has {len(all_security_groups)} SG's that matched condition {search_by} : {search_for}")
+        log.info(
+            f"{region} has {len(all_security_groups)} SG's that matched condition {search_by} : {search_for}"
+        )
 
     return all_security_groups
 
 
 def lambda_handler(event, context):
-    # Define the regions you want to query
-    regions               = ["us-east-1", "us-west-1", "us-west-2", "us-east-2"]
-    supported_event_types = ["get_security_groups_by_tag", "get_security_groups_by_cidr", "validate_cidr_exists", "update_security_group_rule"]
-    data                  = {}
+    regions = ["us-east-1", "us-west-1", "us-west-2", "us-east-2"]
+    supported_event_types = [
+        "get_security_groups_by_tag",
+        "get_security_groups_by_cidr",
+        "validate_cidr_exists",
+        "update_security_group_rule",
+    ]
+    supported_tag_keys = ["test_whitelist"]
+    data = {}
 
-    if event["type"] not in supported_event_types:
-        data["error"] = {"message":f"event type {event.get('type')} not supported, must be one of the following: {str(supported_event_types)}"} 
+    event_type = event["type"]
+
+    if event_type not in supported_event_types:
+        error_message = f"Request body has invalid event type: {event_type}, must be one of the following: {str(supported_event_types)}"
+        data["error"] = [{"message": error_message, "status": "error"}]
+        log.error(error_message)
     else:
-        if event["type"] == "get_security_groups_by_tag":
-            search_by = "tag_key"
-            search_for = event["tag_key"]
-            for region in regions:
-                response = get_security_groups(search_by, search_for, region)
-                if not response.get("error"):
-                    data[region] = response
+        try:
+            # validate_cidr_exists
+            if event_type == "validate_cidr_exists":
+                search_by = "sg_id"
+                search_for = event.get(search_by)
+                region = event.get("region")
+                cidr_block = event.get("cidr_block")
+
+                if (
+                    search_by not in event
+                    or "region" not in event
+                    or "cidr_block" not in event
+                ):
+                    error_message = f"Request body for {event_type} must include parameters {search_by}, region, cidr_block. One or more parameters not found"
+                    raise KeyError(error_message)
+
+                if (
+                    not search_for.startswith("sg-")
+                    or not is_valid_cidr(cidr_block)
+                    or region not in regions
+                ):
+                    error_message = f"Request body for {event_type} has one or more invalid parameter, must be valid values: sg_id = 'sg-0000', cidr_block = '10.0.2.0/32', region = must be one of the following: {str(regions)}"
+                    raise ValueError(error_message)
                 else:
-                    data[region] = [response.get("error")]
-        elif event["type"] == "get_security_groups_by_cidr":
-            search_by = "cidr_block"
-            search_for = event["cidr_block"]
-            for region in regions:
-                response = get_security_groups(search_by, search_for, region)
-                if not response.get("error"):
-                    data[region] = response
+                    data[region] = [
+                        validate_cidr_exists(search_by, search_for, region, cidr_block)
+                    ]
+            # update_security_group_rule
+            elif event_type == "update_security_group_rule":
+                cidr_block = event.get("cidr_block")
+                tag_key = event.get("tag_key")
+
+                if "cidr_block" not in event or "tag_key" not in event:
+                    error_message = f"Request body for {event_type} must include parameters tag_key and cidr_block. One or more parameters not found"
+                    raise KeyError(error_message)
+
+                if not is_valid_cidr(cidr_block):
+                    error_message = f"Request body for {event_type} has invalid cidr_block: {cidr_block}, must be a valid CIDR block, e.g., 192.168.2.0/32"
+                    raise ValueError(error_message)
+
+                if tag_key not in supported_tag_keys:
+                    error_message = f"Request body for {event_type} has invalid tag_key: {tag_key}, must be one of the following: {supported_tag_keys}"
+                    raise KeyError(error_message)
+                # all validations passed
+                data = update_security_group_rule(cidr_block, tag_key, regions)
+            # get_security_groups_by_tag or get_security_groups_by_cidr
+            else:
+                search_by = (
+                    "tag_key"
+                    if event_type == "get_security_groups_by_tag"
+                    else "cidr_block"
+                )
+
+                # search_for = search_by value, if request body is missing the expected search_by param, raise KeyError
+                if search_by in event:
+                    search_for = event.get(search_by)
                 else:
-                    data[region] = response.get("error")
-        elif event["type"] == "validate_cidr_exists":
-            search_by  = "sg_id"
-            search_for = event.get("sg_id")
-            region     = event.get("region")
-            cidr_block = event.get("cidr_block")
-            response   = validate_cidr_exists(search_by, search_for, region, cidr_block)
-            data       = response
-        elif event["type"] == "update_security_group_rule":
-            cidr_block = event["cidr_block"]
-            tag_key    = event["tag_key"]
-            response   = update_security_group_rule(cidr_block, tag_key, regions)
-            data       = response
+                    error_message = f"Request body for {event_type} must include parameter {search_by}. Parameter not found"
+                    raise KeyError(error_message)
+
+                # validate the value of search_for
+                if search_by == "tag_key" and search_for not in supported_tag_keys:
+                    error_message = f"Request body for {event_type} has invalid {search_by}: {search_for}, must be one of the following: {str(supported_tag_keys)}"
+                    raise ValueError(error_message)
+
+                if search_by == "cidr_block" and not is_valid_cidr(search_for):
+                    error_message = f"Request body for {event_type} has invalid {search_by}: {search_for}, must be a valid CIDR block, e.g., 192.168.2.0/32"
+                    raise ValueError(error_message)
+
+                # all validations have passed
+                for region in regions:
+                    response = get_security_groups(search_by, search_for, region)
+                    data[region] = response
+        except (KeyError, ValueError, Exception) as e:
+            error_message = str(e)
+            error = {
+                "event_type": event_type,
+                "message": error_message,
+                "status": "error",
+            }
+            log.error(error_message)
+            data["error"] = [error]
 
     pretty_output = json.dumps(data, indent=4)
     log.info(pretty_output)

@@ -1,0 +1,25 @@
+timestamp,message
+1700505883982,"INIT_START Runtime Version: python:3.9.v36	Runtime Version ARN: arn:aws:lambda:us-east-1::runtime:386a1053a16b9122f1622b361a8a78f39595e5a53df0c82932eacae85b33cd62
+"
+1700505884246,"START RequestId: 63a605c0-8b4e-46b6-a341-050c31afc063 Version: $LATEST
+"
+1700505884477,"[INFO]	2023-11-20T18:44:44.477Z	63a605c0-8b4e-46b6-a341-050c31afc063	Found credentials in environment variables.
+"
+1700505886793,"[INFO]	2023-11-20T18:44:46.792Z	63a605c0-8b4e-46b6-a341-050c31afc063	us-east-1 has 1 SG's that matched condition sg_id : sg-0eec40bafd5628a81
+"
+1700505886838,"[INFO]	2023-11-20T18:44:46.838Z	63a605c0-8b4e-46b6-a341-050c31afc063	SG sg-0eec40bafd5628a81 does have an ingress rule for 10.0.0.2/32
+"
+1700505886838,"[INFO]	2023-11-20T18:44:46.838Z	63a605c0-8b4e-46b6-a341-050c31afc063	{
+    ""us-east-1"": [
+        {
+            ""exists"": true,
+            ""from_port"": 443,
+            ""to_port"": 443
+        }
+    ]
+}
+"
+1700505886860,"END RequestId: 63a605c0-8b4e-46b6-a341-050c31afc063
+"
+1700505886860,"REPORT RequestId: 63a605c0-8b4e-46b6-a341-050c31afc063	Duration: 2613.08 ms	Billed Duration: 2614 ms	Memory Size: 128 MB	Max Memory Used: 84 MB	Init Duration: 262.56 ms	
+"
