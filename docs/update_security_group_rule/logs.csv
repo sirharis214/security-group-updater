@@ -1,0 +1,232 @@
+timestamp,message
+1700509842767,"INIT_START Runtime Version: python:3.9.v36	Runtime Version ARN: arn:aws:lambda:us-east-1::runtime:386a1053a16b9122f1622b361a8a78f39595e5a53df0c82932eacae85b33cd62
+"
+1700509843043,"START RequestId: 90691a53-bd9e-45f9-80e1-998de7d8f357 Version: $LATEST
+"
+1700509843222,"[INFO]	2023-11-20T19:50:43.222Z	90691a53-bd9e-45f9-80e1-998de7d8f357	Found credentials in environment variables.
+"
+1700509845577,"[INFO]	2023-11-20T19:50:45.577Z	90691a53-bd9e-45f9-80e1-998de7d8f357	us-east-1 has 2 SG's that matched condition tag_key : test_whitelist
+"
+1700509845619,"[INFO]	2023-11-20T19:50:45.578Z	90691a53-bd9e-45f9-80e1-998de7d8f357	SG #1: sg-0931bff5d7a180d5a should have rules that match 10.0.0.2/32 with ['443']
+"
+1700509845619,"[INFO]	2023-11-20T19:50:45.619Z	90691a53-bd9e-45f9-80e1-998de7d8f357	SG #1: sg-0931bff5d7a180d5a has 2 rules
+"
+1700509845619,"[INFO]	2023-11-20T19:50:45.619Z	90691a53-bd9e-45f9-80e1-998de7d8f357	checking for port 443
+"
+1700509845619,"[INFO]	2023-11-20T19:50:45.619Z	90691a53-bd9e-45f9-80e1-998de7d8f357	checking_rule #1: rule not for our cidr_block
+"
+1700509845619,"[INFO]	2023-11-20T19:50:45.619Z	90691a53-bd9e-45f9-80e1-998de7d8f357	checking for port 443
+"
+1700509845619,"[INFO]	2023-11-20T19:50:45.619Z	90691a53-bd9e-45f9-80e1-998de7d8f357	checking_rule #2: {
+    ""FromPort"": 443,
+    ""IpProtocol"": ""tcp"",
+    ""IpRanges"": [
+        {
+            ""CidrIp"": ""10.0.0.2/32"",
+            ""Description"": ""test rule description""
+        }
+    ],
+    ""Ipv6Ranges"": [],
+    ""PrefixListIds"": [],
+    ""ToPort"": 443,
+    ""UserIdGroupPairs"": []
+}
+"
+1700509845620,"[INFO]	2023-11-20T19:50:45.619Z	90691a53-bd9e-45f9-80e1-998de7d8f357	rule has required ports; 443
+"
+1700509845620,"[INFO]	2023-11-20T19:50:45.620Z	90691a53-bd9e-45f9-80e1-998de7d8f357	removing port range if it was marked to be created...
+"
+1700509845620,"[INFO]	2023-11-20T19:50:45.620Z	90691a53-bd9e-45f9-80e1-998de7d8f357	SG #2: sg-0eec40bafd5628a81 should have rules that match 10.0.0.2/32 with ['443']
+"
+1700509845620,"[INFO]	2023-11-20T19:50:45.620Z	90691a53-bd9e-45f9-80e1-998de7d8f357	SG #2: sg-0eec40bafd5628a81 has 0 rules
+"
+1700509845620,"[INFO]	2023-11-20T19:50:45.620Z	90691a53-bd9e-45f9-80e1-998de7d8f357	Need to create rules for SG #2 sg-0eec40bafd5628a81: [
+    {
+        ""sg_id"": ""sg-0eec40bafd5628a81"",
+        ""region"": ""us-east-1"",
+        ""cidr_block"": ""10.0.0.2/32"",
+        ""from_port"": ""443"",
+        ""to_port"": ""443""
+    }
+]
+"
+1700509845620,"[INFO]	2023-11-20T19:50:45.620Z	90691a53-bd9e-45f9-80e1-998de7d8f357	Creating rule: {'sg_id': 'sg-0eec40bafd5628a81', 'region': 'us-east-1', 'cidr_block': '10.0.0.2/32', 'from_port': '443', 'to_port': '443'}
+"
+1700509847277,"[INFO]	2023-11-20T19:50:47.277Z	90691a53-bd9e-45f9-80e1-998de7d8f357	us-west-1 has 1 SG's that matched condition tag_key : test_whitelist
+"
+1700509847299,"[INFO]	2023-11-20T19:50:47.278Z	90691a53-bd9e-45f9-80e1-998de7d8f357	SG #1: sg-002fc945e5ffc935f should have rules that match 10.0.0.2/32 with ['443', ['22', '23']]
+"
+1700509847299,"[INFO]	2023-11-20T19:50:47.299Z	90691a53-bd9e-45f9-80e1-998de7d8f357	SG #1: sg-002fc945e5ffc935f has 2 rules
+"
+1700509847299,"[INFO]	2023-11-20T19:50:47.299Z	90691a53-bd9e-45f9-80e1-998de7d8f357	checking for port 443
+"
+1700509847299,"[INFO]	2023-11-20T19:50:47.299Z	90691a53-bd9e-45f9-80e1-998de7d8f357	checking_rule #1: {
+    ""FromPort"": 22,
+    ""IpProtocol"": ""tcp"",
+    ""IpRanges"": [
+        {
+            ""CidrIp"": ""10.0.0.2/32"",
+            ""Description"": ""test rule description 2""
+        }
+    ],
+    ""Ipv6Ranges"": [],
+    ""PrefixListIds"": [],
+    ""ToPort"": 23,
+    ""UserIdGroupPairs"": []
+}
+"
+1700509847299,"[INFO]	2023-11-20T19:50:47.299Z	90691a53-bd9e-45f9-80e1-998de7d8f357	marking rule to be created for port 443
+"
+1700509847299,"[INFO]	2023-11-20T19:50:47.299Z	90691a53-bd9e-45f9-80e1-998de7d8f357	checking for port 443
+"
+1700509847299,"[INFO]	2023-11-20T19:50:47.299Z	90691a53-bd9e-45f9-80e1-998de7d8f357	checking_rule #2: rule not for our cidr_block
+"
+1700509847299,"[INFO]	2023-11-20T19:50:47.299Z	90691a53-bd9e-45f9-80e1-998de7d8f357	checking for port ['22', '23']
+"
+1700509847300,"[INFO]	2023-11-20T19:50:47.300Z	90691a53-bd9e-45f9-80e1-998de7d8f357	checking_rule #1: {
+    ""FromPort"": 22,
+    ""IpProtocol"": ""tcp"",
+    ""IpRanges"": [
+        {
+            ""CidrIp"": ""10.0.0.2/32"",
+            ""Description"": ""test rule description 2""
+        }
+    ],
+    ""Ipv6Ranges"": [],
+    ""PrefixListIds"": [],
+    ""ToPort"": 23,
+    ""UserIdGroupPairs"": []
+}
+"
+1700509847300,"[INFO]	2023-11-20T19:50:47.300Z	90691a53-bd9e-45f9-80e1-998de7d8f357	rule has required ports; ['22', '23']
+"
+1700509847300,"[INFO]	2023-11-20T19:50:47.300Z	90691a53-bd9e-45f9-80e1-998de7d8f357	removing port range if it was marked to be created...
+"
+1700509847300,"[INFO]	2023-11-20T19:50:47.300Z	90691a53-bd9e-45f9-80e1-998de7d8f357	Need to create rules for SG #1 sg-002fc945e5ffc935f: [
+    {
+        ""sg_id"": ""sg-002fc945e5ffc935f"",
+        ""region"": ""us-west-1"",
+        ""cidr_block"": ""10.0.0.2/32"",
+        ""from_port"": ""443"",
+        ""to_port"": ""443""
+    }
+]
+"
+1700509847300,"[INFO]	2023-11-20T19:50:47.300Z	90691a53-bd9e-45f9-80e1-998de7d8f357	Creating rule: {'sg_id': 'sg-002fc945e5ffc935f', 'region': 'us-west-1', 'cidr_block': '10.0.0.2/32', 'from_port': '443', 'to_port': '443'}
+"
+1700509848878,"[INFO]	2023-11-20T19:50:48.877Z	90691a53-bd9e-45f9-80e1-998de7d8f357	us-west-2 has No SG's that matched condition tag_key : test_whitelist
+"
+1700509848899,"[INFO]	2023-11-20T19:50:48.899Z	90691a53-bd9e-45f9-80e1-998de7d8f357	No SG in us-west-2 to update, none matched condition tag_key : test_whitelist
+"
+1700509849433,"[INFO]	2023-11-20T19:50:49.433Z	90691a53-bd9e-45f9-80e1-998de7d8f357	us-east-2 has No SG's that matched condition tag_key : test_whitelist
+"
+1700509849434,"[INFO]	2023-11-20T19:50:49.434Z	90691a53-bd9e-45f9-80e1-998de7d8f357	No SG in us-east-2 to update, none matched condition tag_key : test_whitelist
+"
+1700509849439,"[INFO]	2023-11-20T19:50:49.439Z	90691a53-bd9e-45f9-80e1-998de7d8f357	{
+    ""us-east-1"": [
+        {
+            ""message"": ""SG sg-0931bff5d7a180d5a already had rules for this cidr:port-range combo""
+        },
+        {
+            ""rule"": {
+                ""sg_id"": ""sg-0eec40bafd5628a81"",
+                ""region"": ""us-east-1"",
+                ""cidr_block"": ""10.0.0.2/32"",
+                ""from_port"": ""443"",
+                ""to_port"": ""443""
+            },
+            ""status"": ""success"",
+            ""response"": {
+                ""Return"": true,
+                ""SecurityGroupRules"": [
+                    {
+                        ""SecurityGroupRuleId"": ""sgr-056c68f4eb30b068d"",
+                        ""GroupId"": ""sg-0eec40bafd5628a81"",
+                        ""GroupOwnerId"": ""594924424566"",
+                        ""IsEgress"": false,
+                        ""IpProtocol"": ""tcp"",
+                        ""FromPort"": 443,
+                        ""ToPort"": 443,
+                        ""CidrIpv4"": ""10.0.0.2/32"",
+                        ""Description"": ""test_whitelist created by haris/sg-updater"",
+                        ""Tags"": [
+                            {
+                                ""Key"": ""Created_By"",
+                                ""Value"": ""haris/sg_updater""
+                            }
+                        ]
+                    }
+                ],
+                ""ResponseMetadata"": {
+                    ""RequestId"": ""06ea101f-01d7-4cd7-88bc-984f45b80b69"",
+                    ""HTTPStatusCode"": 200,
+                    ""HTTPHeaders"": {
+                        ""x-amzn-requestid"": ""06ea101f-01d7-4cd7-88bc-984f45b80b69"",
+                        ""cache-control"": ""no-cache, no-store"",
+                        ""strict-transport-security"": ""max-age=31536000; includeSubDomains"",
+                        ""content-type"": ""text/xml;charset=UTF-8"",
+                        ""content-length"": ""989"",
+                        ""date"": ""Mon, 20 Nov 2023 19:50:45 GMT"",
+                        ""server"": ""AmazonEC2""
+                    },
+                    ""RetryAttempts"": 0
+                }
+            }
+        }
+    ],
+    ""us-west-1"": [
+        {
+            ""rule"": {
+                ""sg_id"": ""sg-002fc945e5ffc935f"",
+                ""region"": ""us-west-1"",
+                ""cidr_block"": ""10.0.0.2/32"",
+                ""from_port"": ""443"",
+                ""to_port"": ""443""
+            },
+            ""status"": ""success"",
+            ""response"": {
+                ""Return"": true,
+                ""SecurityGroupRules"": [
+                    {
+                        ""SecurityGroupRuleId"": ""sgr-08f73fd74756de016"",
+                        ""GroupId"": ""sg-002fc945e5ffc935f"",
+                        ""GroupOwnerId"": ""594924424566"",
+                        ""IsEgress"": false,
+                        ""IpProtocol"": ""tcp"",
+                        ""FromPort"": 443,
+                        ""ToPort"": 443,
+                        ""CidrIpv4"": ""10.0.0.2/32"",
+                        ""Description"": ""test_whitelist created by haris/sg-updater"",
+                        ""Tags"": [
+                            {
+                                ""Key"": ""Created_By"",
+                                ""Value"": ""haris/sg_updater""
+                            }
+                        ]
+                    }
+                ],
+                ""ResponseMetadata"": {
+                    ""RequestId"": ""3fad4a26-6913-43a0-8a86-e0aa5fe97e15"",
+                    ""HTTPStatusCode"": 200,
+                    ""HTTPHeaders"": {
+                        ""x-amzn-requestid"": ""3fad4a26-6913-43a0-8a86-e0aa5fe97e15"",
+                        ""cache-control"": ""no-cache, no-store"",
+                        ""strict-transport-security"": ""max-age=31536000; includeSubDomains"",
+                        ""content-type"": ""text/xml;charset=UTF-8"",
+                        ""content-length"": ""989"",
+                        ""date"": ""Mon, 20 Nov 2023 19:50:47 GMT"",
+                        ""server"": ""AmazonEC2""
+                    },
+                    ""RetryAttempts"": 0
+                }
+            }
+        }
+    ],
+    ""us-west-2"": [],
+    ""us-east-2"": []
+}
+"
+1700509849462,"END RequestId: 90691a53-bd9e-45f9-80e1-998de7d8f357
+"
+1700509849462,"REPORT RequestId: 90691a53-bd9e-45f9-80e1-998de7d8f357	Duration: 6417.70 ms	Billed Duration: 6418 ms	Memory Size: 128 MB	Max Memory Used: 84 MB	Init Duration: 274.90 ms	
+"
