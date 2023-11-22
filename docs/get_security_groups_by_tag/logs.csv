@@ -1,0 +1,196 @@
+timestamp,message
+1700256316550,"INIT_START Runtime Version: python:3.9.v36	Runtime Version ARN: arn:aws:lambda:us-east-1::runtime:386a1053a16b9122f1622b361a8a78f39595e5a53df0c82932eacae85b33cd62
+"
+1700256316831,"START RequestId: 1cb8d00c-18f7-40b5-8220-6108b1f9c67b Version: $LATEST
+"
+1700256317011,"[INFO]	2023-11-17T21:25:17.011Z	1cb8d00c-18f7-40b5-8220-6108b1f9c67b	Found credentials in environment variables.
+"
+1700256319429,"[INFO]	2023-11-17T21:25:19.429Z	1cb8d00c-18f7-40b5-8220-6108b1f9c67b	us-east-1 has 2 SG's that matched condition tag_key : test_whitelist
+"
+1700256320479,"[INFO]	2023-11-17T21:25:20.479Z	1cb8d00c-18f7-40b5-8220-6108b1f9c67b	us-west-1 has 1 SG's that matched condition tag_key : test_whitelist
+"
+1700256321167,"[INFO]	2023-11-17T21:25:21.167Z	1cb8d00c-18f7-40b5-8220-6108b1f9c67b	us-west-2 has No SG's that matched condition tag_key : test_whitelist
+"
+1700256321658,"[INFO]	2023-11-17T21:25:21.657Z	1cb8d00c-18f7-40b5-8220-6108b1f9c67b	us-east-2 has No SG's that matched condition tag_key : test_whitelist
+"
+1700256321670,"[INFO]	2023-11-17T21:25:21.670Z	1cb8d00c-18f7-40b5-8220-6108b1f9c67b	{
+    ""us-east-1"": [
+        {
+            ""Description"": ""test SG description"",
+            ""GroupName"": ""test-east-1"",
+            ""IpPermissions"": [
+                {
+                    ""FromPort"": 0,
+                    ""IpProtocol"": ""tcp"",
+                    ""IpRanges"": [
+                        {
+                            ""CidrIp"": ""73.248.103.165/32"",
+                            ""Description"": ""test rule description""
+                        }
+                    ],
+                    ""Ipv6Ranges"": [],
+                    ""PrefixListIds"": [],
+                    ""ToPort"": 0,
+                    ""UserIdGroupPairs"": []
+                },
+                {
+                    ""FromPort"": 443,
+                    ""IpProtocol"": ""tcp"",
+                    ""IpRanges"": [
+                        {
+                            ""CidrIp"": ""10.0.0.2/32"",
+                            ""Description"": ""test rule description""
+                        }
+                    ],
+                    ""Ipv6Ranges"": [],
+                    ""PrefixListIds"": [],
+                    ""ToPort"": 443,
+                    ""UserIdGroupPairs"": []
+                }
+            ],
+            ""OwnerId"": ""594924424566"",
+            ""GroupId"": ""sg-0931bff5d7a180d5a"",
+            ""IpPermissionsEgress"": [
+                {
+                    ""IpProtocol"": ""-1"",
+                    ""IpRanges"": [
+                        {
+                            ""CidrIp"": ""0.0.0.0/0""
+                        }
+                    ],
+                    ""Ipv6Ranges"": [],
+                    ""PrefixListIds"": [],
+                    ""UserIdGroupPairs"": []
+                }
+            ],
+            ""Tags"": [
+                {
+                    ""Key"": ""test_whitelist"",
+                    ""Value"": ""[443]""
+                }
+            ],
+            ""VpcId"": ""vpc-0506ab70cca7b4324""
+        },
+        {
+            ""Description"": ""443 needed"",
+            ""GroupName"": ""test-2-east"",
+            ""IpPermissions"": [
+                {
+                    ""FromPort"": 443,
+                    ""IpProtocol"": ""tcp"",
+                    ""IpRanges"": [
+                        {
+                            ""CidrIp"": ""10.0.0.2/32"",
+                            ""Description"": ""test_whitelist created by haris/sg-updater""
+                        }
+                    ],
+                    ""Ipv6Ranges"": [],
+                    ""PrefixListIds"": [],
+                    ""ToPort"": 443,
+                    ""UserIdGroupPairs"": []
+                }
+            ],
+            ""OwnerId"": ""594924424566"",
+            ""GroupId"": ""sg-0eec40bafd5628a81"",
+            ""IpPermissionsEgress"": [
+                {
+                    ""IpProtocol"": ""-1"",
+                    ""IpRanges"": [
+                        {
+                            ""CidrIp"": ""0.0.0.0/0""
+                        }
+                    ],
+                    ""Ipv6Ranges"": [],
+                    ""PrefixListIds"": [],
+                    ""UserIdGroupPairs"": []
+                }
+            ],
+            ""Tags"": [
+                {
+                    ""Key"": ""test_whitelist"",
+                    ""Value"": ""443""
+                }
+            ],
+            ""VpcId"": ""vpc-0506ab70cca7b4324""
+        }
+    ],
+    ""us-west-1"": [
+        {
+            ""Description"": ""test SG description"",
+            ""GroupName"": ""test-west-1"",
+            ""IpPermissions"": [
+                {
+                    ""FromPort"": 22,
+                    ""IpProtocol"": ""tcp"",
+                    ""IpRanges"": [
+                        {
+                            ""CidrIp"": ""10.0.0.2/32"",
+                            ""Description"": ""test rule description 2""
+                        }
+                    ],
+                    ""Ipv6Ranges"": [],
+                    ""PrefixListIds"": [],
+                    ""ToPort"": 23,
+                    ""UserIdGroupPairs"": []
+                },
+                {
+                    ""FromPort"": 0,
+                    ""IpProtocol"": ""tcp"",
+                    ""IpRanges"": [
+                        {
+                            ""CidrIp"": ""73.248.103.165/32"",
+                            ""Description"": ""test rule description""
+                        }
+                    ],
+                    ""Ipv6Ranges"": [],
+                    ""PrefixListIds"": [],
+                    ""ToPort"": 0,
+                    ""UserIdGroupPairs"": []
+                },
+                {
+                    ""FromPort"": 443,
+                    ""IpProtocol"": ""tcp"",
+                    ""IpRanges"": [
+                        {
+                            ""CidrIp"": ""10.0.0.2/32"",
+                            ""Description"": ""test_whitelist created by haris/sg-updater""
+                        }
+                    ],
+                    ""Ipv6Ranges"": [],
+                    ""PrefixListIds"": [],
+                    ""ToPort"": 443,
+                    ""UserIdGroupPairs"": []
+                }
+            ],
+            ""OwnerId"": ""594924424566"",
+            ""GroupId"": ""sg-002fc945e5ffc935f"",
+            ""IpPermissionsEgress"": [
+                {
+                    ""IpProtocol"": ""-1"",
+                    ""IpRanges"": [
+                        {
+                            ""CidrIp"": ""0.0.0.0/0""
+                        }
+                    ],
+                    ""Ipv6Ranges"": [],
+                    ""PrefixListIds"": [],
+                    ""UserIdGroupPairs"": []
+                }
+            ],
+            ""Tags"": [
+                {
+                    ""Key"": ""test_whitelist"",
+                    ""Value"": ""[443,22-23]""
+                }
+            ],
+            ""VpcId"": ""vpc-068f8707cdf1cfbc4""
+        }
+    ],
+    ""us-west-2"": [],
+    ""us-east-2"": []
+}
+"
+1700256321691,"END RequestId: 1cb8d00c-18f7-40b5-8220-6108b1f9c67b
+"
+1700256321691,"REPORT RequestId: 1cb8d00c-18f7-40b5-8220-6108b1f9c67b	Duration: 4857.68 ms	Billed Duration: 4858 ms	Memory Size: 128 MB	Max Memory Used: 84 MB	Init Duration: 279.20 ms	
+"
